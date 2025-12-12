@@ -3,11 +3,13 @@ import cors from 'cors';
 import fs from 'fs';
 import path from 'path';
 import dotenv from 'dotenv';
-
+console.log("BOOT: server.js arrancando, PID=", process.pid, "PORT=", process.env.PORT);
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+console.log("BOOT: voy a hacer listen en", process.env.PORT);
+
 app.listen(PORT, '0.0.0.0');
 
 app.use(cors());             // si quieres, limita al origen de tu frontend
