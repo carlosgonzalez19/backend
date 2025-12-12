@@ -8,6 +8,7 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+app.listen(PORT, '0.0.0.0');
 
 app.use(cors());             // si quieres, limita al origen de tu frontend
 app.use(express.json());
