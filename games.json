@@ -1,0 +1,5 @@
+[
+  { "id": 1, "title": "Zelda", "genre": "Aventura", "rating": 9.5 },
+  { "id": 2, "title": "Mario Kart", "genre": "Carreras", "rating": 8.7 },
+  { "id": 3, "title": "Hades", "genre": "Roguelike", "rating": 9.0 }
+]
