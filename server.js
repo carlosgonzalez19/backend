@@ -3,21 +3,17 @@ import cors from 'cors';
 import fs from 'fs';
 import path from 'path';
 import dotenv from 'dotenv';
-console.log("BOOT: server.js arrancando, PID=", process.pid, "PORT=", process.env.PORT);
+
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-console.log("BOOT: voy a hacer listen en", process.env.PORT);
 
-app.listen(PORT, () => {
-  console.log(`Listening on ${PORT}`);
-});
-
-
-app.use(cors());             // si quieres, limita al origen de tu frontend
+// Middlewares ANTES de rutas
+app.use(cors());
 app.use(express.json());
 
+// Ruta al JSON (mejor usando el directorio del archivo)
 const dataPath = path.resolve('./games.json');
 
 function readGames() {
@@ -42,7 +38,7 @@ app.get('/api/games/:id', (req, res) => {
   res.json(game);
 });
 
-// (Opcional) Crear
+// Crear
 app.post('/api/games', (req, res) => {
   const { title, genre, rating } = req.body || {};
   if (!title) return res.status(400).json({ error: 'title es obligatorio' });
@@ -50,11 +46,12 @@ app.post('/api/games', (req, res) => {
   const games = readGames();
   const id = games.length ? Math.max(...games.map(g => g.id)) + 1 : 1;
   const newGame = { id, title, genre: genre || '', rating: Number(rating) || 0 };
+
   games.push(newGame);
   fs.writeFileSync(dataPath, JSON.stringify(games, null, 2));
   res.status(201).json(newGame);
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`API escuchando en http://0.0.0.0:${PORT}`);
+app.listen(PORT, () => {
+  console.log(`API escuchando en puerto ${PORT}`);
 });
