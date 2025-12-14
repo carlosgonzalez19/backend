@@ -10,7 +10,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 console.log("BOOT: voy a hacer listen en", process.env.PORT);
 
-app.listen(PORT, '0.0.0.0');
+app.listen(PORT, () => {
+  console.log(`Listening on ${PORT}`);
+});
+
 
 app.use(cors());             // si quieres, limita al origen de tu frontend
 app.use(express.json());
